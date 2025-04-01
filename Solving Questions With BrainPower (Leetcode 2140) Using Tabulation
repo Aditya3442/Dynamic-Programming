@@ -1,0 +1,13 @@
+class Solution {
+    public long mostPoints(int[][] questions) {
+        int n = questions.length;
+        long dp[] = new long[n];
+        for(int index = n - 1; index >= 0; index--) {
+           long take = (long)questions[index][0];
+           take += (index + questions[index][1] + 1 < n) ? dp[index + questions[index][1] + 1] : 0;
+           long nottake = (index + 1 < n) ? dp[index + 1] : 0;
+           dp[index] = Math.max(take , nottake);
+        }
+        return dp[0];
+    }
+}
