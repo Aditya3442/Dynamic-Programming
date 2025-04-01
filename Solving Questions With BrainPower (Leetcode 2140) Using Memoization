@@ -1,0 +1,17 @@
+class Solution {
+    public long recur(int index , int[][] questions , long[] dp) {
+        if(index >= questions.length)
+          return 0;
+        if(dp[index] != -1)
+          return dp[index];
+        long take = (long)questions[index][0] + recur(index + questions[index][1] + 1 , questions , dp);
+        long nottake = recur(index + 1 , questions , dp);
+        return dp[index] = Math.max(take , nottake);
+    }
+    public long mostPoints(int[][] questions) {
+        int n = questions.length;
+        long dp[] = new long[n];
+        Arrays.fill(dp , -1);
+        return recur(0 , questions , dp);
+    }
+}
