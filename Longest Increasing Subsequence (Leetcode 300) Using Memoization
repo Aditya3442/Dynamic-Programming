@@ -1,0 +1,21 @@
+class Solution {
+    public int recur(int index , int prev , int[] nums , int[][] dp) {
+        if(index == nums.length)
+          return 0;
+        if(dp[index][prev + 1] != -1)
+          return dp[index][prev + 1];
+        int take = 0;
+        if(prev == -1 || nums[index] > nums[prev]) {
+            take = 1 + recur(index + 1 , index , nums , dp);
+        }
+        int nottake = recur(index + 1 , prev , nums , dp);
+        return dp[index][prev + 1] = Math.max(take , nottake);
+    }
+    public int lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        int dp[][] = new int[n][n + 1];
+        for(int arr[] : dp)
+          Arrays.fill(arr , -1);
+        return recur(0 , -1 , nums , dp);
+    }
+}
