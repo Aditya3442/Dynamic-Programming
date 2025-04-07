@@ -1,0 +1,35 @@
+class Solution {
+    public boolean recur(int index , int sum , int fixsum , int[] nums , int[][] dp) {
+        if(sum == fixsum)
+          return true;
+        if(sum > fixsum || index == nums.length)
+          return false;
+        if(dp[index][sum] != -1) {
+             if(dp[index][sum] == 0)
+                return false;
+             else
+                return true;
+        }
+        boolean take    = recur(index + 1 , sum + nums[index] , fixsum , nums , dp);
+        boolean nottake = recur(index + 1 , sum , fixsum , nums , dp);
+        if(take || nottake) 
+            dp[index][sum] = 1;
+        else
+           dp[index][sum] = 0;
+        return take || nottake;
+    }
+    public boolean canPartition(int[] nums) {
+        int n =nums.length;
+        int sum = 0;
+        for(int i : nums) {
+            sum += i;
+        }
+        if(sum % 2 == 1)
+           return false;
+        sum /= 2;
+        int dp[][] = new int[n][sum + 1];
+        for(int arr[] : dp) 
+           Arrays.fill(arr , -1);
+        return recur(0 , 0 , sum , nums , dp);
+    }
+}
