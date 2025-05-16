@@ -1,0 +1,46 @@
+class Solution {
+    public boolean isHamming(String str1 , String str2) {
+        int n = str1.length();
+        int count = 0;
+        for(int i = 0; i < n; i++) {
+            if(str1.charAt(i) != str2.charAt(i)) {
+                count++;
+            }
+            if(count > 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public List<String> getWordsInLongestSubsequence(String[] words, int[] groups) {
+        int n = words.length;
+        int dp[] = new int[n];
+        Arrays.fill(dp , 1);
+
+        int prev[] = new int[n];
+        Arrays.fill(prev , -1);
+
+        int maxi = 1;
+        int index = 0;
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < i; j++) {
+                if(groups[i] != groups[j] && words[i].length() == words[j].length() && isHamming(words[i] , words[j]) && dp[j] + 1 > dp[i]) {
+                      dp[i] = dp[j] + 1;
+                      prev[i] = j;
+                }
+            }
+            if(dp[i] > maxi) {
+                maxi = dp[i];
+                index = i;
+            }
+        }
+
+        List<String> ans = new ArrayList<>();
+        while(index != -1) {
+             ans.add(words[index]);
+             index = prev[index];
+        }
+        Collections.reverse(ans);
+        return ans;
+    }
+}
