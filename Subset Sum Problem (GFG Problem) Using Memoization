@@ -1,0 +1,36 @@
+class Solution {
+    public static boolean recur(int index , int[] arr , int sum , int[][] dp) {
+        if(sum < 0)
+          return false;
+        if(sum == 0)
+          return true;
+        if(index == 0) {
+            if(sum == arr[index] || sum == 0)
+               return true;
+            else
+               return false;
+        }
+        if(dp[index][sum] != -1) {
+            if(dp[index][sum] == 1)
+               return true;
+            else
+               return false;
+        }
+        boolean pickup = recur(index - 1 , arr , sum - arr[index] , dp);
+        boolean notpickup = recur(index - 1 , arr , sum , dp);
+        if(pickup || notpickup)
+          dp[index][sum] = 1;
+        else
+          dp[index][sum] = 0;
+        return pickup || notpickup;
+        
+    }
+    static Boolean isSubsetSum(int arr[], int sum) {
+        // code here
+        int n = arr.length;
+        int dp[][] = new int[n][sum + 1];
+        
+        int 
+        
+    }
+}
