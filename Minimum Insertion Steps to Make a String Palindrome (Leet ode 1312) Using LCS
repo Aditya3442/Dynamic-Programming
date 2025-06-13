@@ -1,0 +1,18 @@
+class Solution {
+    public int minInsertions(String s) {
+        int n = s.length();
+        StringBuilder sb = new StringBuilder(s);
+        String rev = sb.reverse().toString();
+        int dp[][] = new int[n + 1][n + 1];
+        
+        for(int index1 = 1; index1 <= n; index1++) {
+            for(int index2 = 1; index2 <= n; index2++) {
+                 if(s.charAt(index1 - 1) == rev.charAt(index2 - 1))
+                    dp[index1][index2] = 1 + dp[index1 - 1][index2 - 1];
+                 else
+                    dp[index1][index2] = Math.max(dp[index1 - 1][index2] , dp[index1][index2 -1]);
+            }
+        }
+        return n - dp[n][n];
+    }
+}
